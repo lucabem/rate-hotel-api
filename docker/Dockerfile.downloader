@@ -1,0 +1,11 @@
+FROM python:3.9-slim
+
+ENV LANDING_PATH=
+ENV LANDING_FORMAT=
+ENV DOWNLOADING_DATE=
+
+WORKDIR /usr/app/
+
+COPY ../code/downloader code/downloader
+
+CMD [ "python", "code/downloader/main.py"]
