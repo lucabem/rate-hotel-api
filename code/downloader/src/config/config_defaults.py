@@ -6,6 +6,6 @@ def get_environ(key, default):
     else:
         return os.environ.get(key)
     
-LANDING_PATH   = get_environ('LANDING_PATH', 'data/landing')
+LANDING_PATH   = get_environ('LANDING_PATH', 'data/stage')
 LANDING_FORMAT = get_environ('LANDING_FORMAT', 'csv')
 THREADS_NUMBER = get_environ('THREADS_NUMBER', 5)
