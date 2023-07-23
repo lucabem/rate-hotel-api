@@ -27,6 +27,18 @@ class DateUtils:
         return dates
     
     @staticmethod
+    def get_next_dates(days: int, fmt: str):
+        current_date = datetime.today()
+        next_dates = []
+        for i in range(days):
+            next_dates.append(current_date.strftime(fmt))
+            current_date += timedelta(days=1)
+        
+        return next_dates
+
+
+    
+    @staticmethod
     def format_date_to_str(date: datetime, fmt: str) -> str:
         return date.strftime(fmt)
     

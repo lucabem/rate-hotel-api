@@ -6,7 +6,7 @@ class RateDownloaderWrapper:
 
     def __init__(self, threads:int = 5, fmt:str ='%Y-%m-%d') -> None:
         self.threads = int(threads)
-        self.dates   = DateUtils.get_dates_by_month(month=DateUtils.get_current_month(), fmt=fmt)
+        self.dates   = DateUtils.get_next_dates(days=31, fmt=fmt)
 
     def _runner(self, date: str) -> str:
         downloader_service = RateDownloaderService(date)
