@@ -1,0 +1,26 @@
+FROM hseeberger/scala-sbt:graalvm-ce-19.3.0-java11_1.3.7_2.13.1 as build
+
+COPY ../code/consolidator /app
+
+WORKDIR /app
+
+RUN sbt assembly
+
+# Stage 2: Create the runtime container
+FROM bitnami/spark:3.1.2
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the JAR from the build container to the runtime container
+COPY --from=builder /app/target/scala-2.12/CSVProcessor.jar .
+
+# Set environment variables for input and output folder paths
+ENV INPUT_FOLDER /app/input
+ENV OUTPUT_FOLDER /app/output
+
+# Copy the input data (CSV files) into the container
+COPY data/landing $INPUT_FOLDER
+
+# Run the Spark application using spark-submit command
+CMD spark-submit --class CSVProcessor --master local[*] CSVProcessor.jar $INPUT_FOLDER $OUTPUT_FOLDER
